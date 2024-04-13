@@ -1,1 +1,1 @@
-Desenvolvendo um sistema de gestão para a PAP ITEL 
+Aprendendo os fundamentos de react-native com o Rodrigo da Rocketseat
