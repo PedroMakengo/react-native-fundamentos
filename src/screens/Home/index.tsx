@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  Alert,
 } from 'react-native'
 import { style } from './styles'
 import { Participant } from '../../components/Participant'
@@ -21,14 +22,29 @@ export default function Home() {
     'Maria',
     'António',
     'Helder',
+    'Pedro',
   ]
   // FUNÇÃO
   const handleParticipantAdd = () => {
-    console.log('Você clicou no botão de adicionar!')
+    if (participants.includes('Pedro')) {
+      return Alert.alert(
+        'Participante Existe',
+        'Já existe um participante na lista com esse nome.'
+      )
+    }
   }
 
   const handleParticipantRemove = (name: string): void => {
-    console.log(`Você clicou em remover o participante - ${name}`)
+    Alert.alert('Remover', `Removeu o participante ${name}`, [
+      {
+        text: 'Sim',
+        onPress: () => Alert.alert('Deletado!'),
+      },
+      {
+        text: 'Não',
+        style: 'cancel',
+      },
+    ])
   }
   return (
     <View style={style.container}>
