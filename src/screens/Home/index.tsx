@@ -1,5 +1,5 @@
+import React, { useState } from 'react'
 import {
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,34 +11,36 @@ import { style } from './styles'
 import { Participant } from '../../components/Participant'
 
 export default function Home() {
-  const participants = [
-    'Pedro',
-    'Débora',
-    'Makengo',
-    'Francisco',
-    'Tiago',
-    'Paulo',
-    'Isabel',
-    'Maria',
-    'António',
-    'Helder',
-    'Pedro',
-  ]
+  // VARIÁVEL
+  const [participants, setParticipants] = useState<string[]>([])
+  const [participantName, setParticipantName] = useState('')
+
   // FUNÇÃO
   const handleParticipantAdd = () => {
-    if (participants.includes('Pedro')) {
+    if (participants.includes(participantName)) {
       return Alert.alert(
         'Participante Existe',
         'Já existe um participante na lista com esse nome.'
       )
     }
+    setParticipants((prevState) => [...prevState, participantName])
+    setParticipantName('')
   }
 
   const handleParticipantRemove = (name: string): void => {
+    // const    = participants.filter(participant => participant !== name)
+
+    setParticipants((prevState) =>
+      prevState.filter((participant) => participant !== name)
+    )
+
     Alert.alert('Remover', `Removeu o participante ${name}`, [
       {
         text: 'Sim',
-        onPress: () => Alert.alert('Deletado!'),
+        onPress: () =>
+          setParticipants((prevState) =>
+            prevState.filter((participant) => participant !== name)
+          ),
       },
       {
         text: 'Não',
@@ -46,6 +48,7 @@ export default function Home() {
       },
     ])
   }
+
   return (
     <View style={style.container}>
       <Text style={style.eventName}>Nome do evento</Text>
@@ -56,6 +59,8 @@ export default function Home() {
           style={style.input}
           placeholder="Nome do participante"
           placeholderTextColor={'#6b6b6b'}
+          onChangeText={setParticipantName}
+          value={participantName}
         />
 
         <TouchableOpacity style={style.button} onPress={handleParticipantAdd}>
